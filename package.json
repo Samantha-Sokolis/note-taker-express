@@ -1,0 +1,24 @@
+{
+  "name": "note-taker-express",
+  "version": "1.0.0",
+  "description": "## Your Task",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Samantha-Sokolis/note-taker-express.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Samantha-Sokolis/note-taker-express/issues"
+  },
+  "homepage": "https://github.com/Samantha-Sokolis/note-taker-express#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
