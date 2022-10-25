@@ -59,7 +59,7 @@ app.delete("/api/notes/:id", function(req, res) {
 
 // HTML Routes
 app.get("/notes", function(req, res) {
-    res.sendFile(path.join(_dirname, "./develope/public/index.html"));
+    res.sendFile(path.join(_dirname, "./develope/public/notes.html"));
 });
 
 app.get("/", function(req, res) {
