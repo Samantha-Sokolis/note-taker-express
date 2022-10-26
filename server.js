@@ -1,10 +1,12 @@
-// Dependencies
+// Dependencies required to handle different Http methdods API routes
 const express = require("express");
 const path = require("path");
+// Importing File System module
 const fs = require("fs");
+// importing Utilities module
 const util = require("util");
 
-// Handling Asynchronous processes
+// Handling Asynchronous processes - reads note and returns note for user, and in .json file
 const readFileAsync = util.promisify(fs.readFile);
 const writeFileAsync = util.promisify(fs.writeFile);
 
@@ -12,14 +14,14 @@ const writeFileAsync = util.promisify(fs.writeFile);
 const app = express();
 const PORT = process.env.PORT || 8000;
 
-// This sets up the EXpress app to handle data parsing
+// This sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 
-// Static Middleware
+// Static Middleware so the page can pick up statis files for front end
 app.use(express.static("./Develop/public"));
 
-// API Route - GET Request
+// API Route - GET Request - gets notes and puts in an array
 app.get("/api/notes", function(req, res) {
     readFileAsync("./Develop/db/db.json", "utf8").then(function(data) {
         notes = [].concat(JSON.parse(data))
@@ -27,34 +29,17 @@ app.get("/api/notes", function(req, res) {
     })
 });
 
-// API Route - POST Request
+// API Route - POST Request  - posts and adds to existing array and writes back to db.json file
 app.post("/api/notes", function(req, res) {
+    const note = req.body;
     readFileAsync("./Develop/db/db.json", "utf8").then(function(data) {
-        otes = [].concat(JSON.parse(data));
+        const notes = [].concat(JSON.parse(data));
         note.id = notes.length + 1
         notes.push(note);
         return notes
     }).then(function(notes) {
         writeFileAsync("./Develop/db/db.json", JSON.stringify(notes))
         res.json(notes);
-    })
-});
-
-// API Route - DELETE request
-app.delete("/api/notes/:id", function(req, res) {
-    const idToDelete = parseInt(req.params.id);
-    readFileAsync("./Develop/db/db.json", "utf8").then(function(data) {
-        const notes = [].concat(JSON.parse(data));
-        const newNotesData = []
-        for (let i = 0; i<notes.length; i++) {
-            if(idToDelete !== notes[i].id) {
-                newNotesData.push(notes[i])
-            }
-        }
-        return newNotesData
-    }).then(function(notes) {
-        writeFileAsync("./Develop/db/db.json", JSON.stringify(notes))
-        res.send('saved successfully');
     })
 });
 
